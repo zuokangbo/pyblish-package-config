@@ -1,12 +1,13 @@
 from tortoise import fields
 from .model_abc import TimestampMixin
+from .enums import PluginType
 
 
 class TemplateFiles(TimestampMixin):
     name = fields.CharField(max_length=20, description="模板名称")
     label = fields.CharField(max_length=20, description="显示名称")
     add_module = fields.CharField(default="", max_length=255, description="添加要导入的模块")
-    plugin_type = fields.IntField(default=0, description="0 c, 1 v, 2 e, 3 i, 4, a")
+    plugin_type = fields.IntEnumField(PluginType, default=PluginType.Collect, description="0 c, 1 v, 2 e, 3 i, 4, a")
     describe = fields.CharField(max_length=255, description="当前脚本的描述")
     file_type = fields.IntField(default=0, description="0 为嵌入文件, 1 为引用文件")
     path = fields.CharField(default="", max_length=255, description="如果为引用, 引用的位置")
