@@ -13,20 +13,21 @@ class TemplateFiles(TimestampMixin):
     path = fields.CharField(default="", max_length=255, description="如果为引用, 引用的位置")
     to_path = fields.CharField(default="", max_length=255, description="部署之后的相对路径, 空为根目录")
     tags = fields.CharField(default="", max_length=255, description="文件标签名称")
-    template_id = fields.IntField(default=0, description="关联的模板内容")
     actions = fields.CharField(max_length=40, description="actions list")
     active = fields.IntField(default=0, description="0 启用 1 关闭")
     families = fields.CharField(max_length=40, description="families list")
     hosts = fields.CharField(max_length=40, description="hosts list")
     optional = fields.IntField(default=0, description="0 启用 1 关闭")
     order = fields.FloatField(default=0.0, description="偏移顺序")
-    other_attr = fields.JSONField(default="{}", description="附加属性")
     targets = fields.CharField(max_length=40, description="targets list")
 
 
 class TemplateContent(TimestampMixin):
-    run_parameter = fields.CharField(max_length=20, description="传入参数")
-    run_content = fields.TextField(default="")
+    template_id = fields.IntField(default=0, description="关联的模板内容")
+    process_parameter = fields.CharField(default="", max_length=40, description="执行模块")
+    process_content = fields.TextField(default="")
+    repair_parameter = fields.CharField(default="", max_length=40, description="传入参数")
+    repair_content = fields.TextField(default="")
     other_content = fields.TextField(default="")
 
 
