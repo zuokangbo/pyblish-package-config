@@ -5,7 +5,7 @@ from starlette.staticfiles import StaticFiles
 from starlette.middleware.cors import CORSMiddleware
 from .config import DB_ORM_CONFIG
 from .sys_events import startup, stopping
-from .router import all_router, open_dev_doc
+from .router import all_api_router, open_dev_doc
 
 _root: str = os.getcwd().replace("\\", "/")
 
@@ -22,7 +22,7 @@ def main() -> FastAPI:
     application.add_event_handler("startup", startup(application))
     application.add_event_handler("shutdown", stopping(application))
 
-    application.include_router(all_router)
+    application.include_router(all_api_router)
     if os.getenv("APP_DEBUG") == "True":
         open_dev_doc(application)
 
@@ -36,7 +36,6 @@ def main() -> FastAPI:
 
     # Static resource directory
     application.mount('/', StaticFiles(directory=f"{_root}/public"), name="public")
-    application.mount('/website/', StaticFiles(directory=f"{_root}/static_files/website"), name="website")
     application.mount('/build/', StaticFiles(directory=f"{_root}/static_files/build"), name="build")
 
     register_tortoise(application, config=DB_ORM_CONFIG, generate_schemas=is_debug, add_exception_handlers=True)

@@ -31,9 +31,9 @@ async def add_content(file_id: int, post: files.AddFileContent) -> dict:
     await TemplateContent.create(**post.dict(), template_id=file_id)
     return success()
 
+
 @FileApi.get("/content/{file_id}", summary=u"获取脚本内容")
 async def get_content(file_id: int) -> dict:
-    TemplateContent.get
     content_data = await TemplateContent.get_or_none(template_id=file_id, status=1).values("process_parameter", 
                                                                                            "process_content", 
                                                                                            "repair_parameter", 
