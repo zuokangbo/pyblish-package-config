@@ -1,15 +1,15 @@
 <template>
 	<!---Main Sidebar -->
-	<mainAdminSidebar></mainAdminSidebar>
+	<mainSidebar></mainSidebar>
 	<v-main>
 		<div class="flex-fill">
-		  <slot></slot>
+		  <router-view> </router-view>
 		</div>
 	</v-main>
 </template>
 
 <script setup lang="ts">
-import mainAdminSidebar from "@/components/mainUserSidebar.vue";
+import mainSidebar from "@/components/mainSidebar.vue";
 
 
 </script>

@@ -8,6 +8,7 @@ class Project(TimestampMixin):
     build_path = fields.CharField(max_length=60, description="构建的目录")
     use_verison = fields.CharField(default="", max_length=20, description="版本名称")
     describe = fields.CharField(max_length=255, description="项目描述")
+    root_name = fields.CharField(max_length=60, description="根目录")
 
 
 class BuildVersion(Model):
@@ -29,3 +30,8 @@ class ProjectSetting(TimestampMixin):
     other_attr = fields.JSONField(default="{}", description="附加属性")
     targets = fields.CharField(max_length=40, description="targets list")
 
+
+class RootPathManager(Model):
+    name = fields.CharField(max_length=20, description="名称")
+    root_path = fields.CharField(max_length=64, description="根目录")
+    describe = fields.CharField(max_length=255, description="项目描述")
