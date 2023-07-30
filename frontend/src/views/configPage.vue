@@ -84,6 +84,7 @@
 					 <th class="text-subtitle-1 font-weight-semibold">name</th>
 					 <th class="text-subtitle-1 font-weight-semibold">root_path</th>
 					 <th class="text-subtitle-1 font-weight-semibold">describe</th>
+					 <th class="text-subtitle-1 font-weight-semibold">action</th>
 				   </tr>
 				 </thead>
 				 <tbody class="text-body-1">

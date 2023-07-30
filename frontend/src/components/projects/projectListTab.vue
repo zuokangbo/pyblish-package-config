@@ -1,9 +1,83 @@
 <template>
 
 <div>
-	<h6 class="text-h6 font-weight-bold pa-5 d-flex align-center">
-	    <span class="flex-fill">所有配置项</span>
-	</h6>
+	<v-card>
+		 <v-card-text>
+			<v-row>
+				 <v-col cols="12" lg="4" md="6">
+				 <div class="text-h5 mb-1">全部项目</div>
+				 </v-col>
+				 <v-col cols="12" lg="8" md="6" class="text-right">
+					 <v-dialog v-model="dialog" max-width="700">
+					   <template v-slot:activator="{ props }">
+						 <v-btn color="primary" v-bind="props" flat class="ml-auto">添加新的项目</v-btn>
+					   </template>
+					   <v-card>
+						 <v-card-title class="pa-4 bg-secondary">
+						   <span class="title text-white">{{ formTitle }}</span>
+						 </v-card-title>
+
+						 <v-card-text>
+						   <v-form
+							 class="mt-5"
+							 ref="form"
+							 v-model="refForm"
+							 lazy-validation
+						   >
+							 <v-row>
+							   <v-col cols="12" sm="6">
+								 <v-text-field
+								   variant="outlined"
+								   color="primary"
+								   density="compact"
+								   v-model="editedItem.name"
+								   :rules="nameRules"
+								   label="name"
+								 ></v-text-field>
+							   </v-col>
+							   <v-col cols="12" sm="6">
+								 <v-text-field
+								   variant="outlined"
+								   color="primary"
+								   density="compact"
+								   :rules="nameRules"
+								   required
+								   v-model="editedItem.root_path"
+								   label="root_path"
+								 ></v-text-field>
+							   </v-col>
+							   <v-col cols="12" sm="6">
+								 <v-text-field
+								   variant="outlined"
+								   color="primary"
+								   density="compact"
+								   v-model="editedItem.describe"
+								   label="describe"
+								 ></v-text-field>
+							   </v-col>
+							 </v-row>
+						   </v-form>
+						 </v-card-text>
+						 <v-divider></v-divider>
+						 <v-card-actions class="pa-4">
+						   <v-spacer></v-spacer>
+						   <v-btn color="error" @click="close">Cancel</v-btn>
+						   <v-btn
+							 color="secondary"
+							 :disabled="
+							   editedItem.name == '' || editedItem.root_path == ''
+							 "
+							 variant="flat"
+							 @click="save"
+							 >Save</v-btn
+						   >
+						 </v-card-actions>
+					   </v-card>
+					 </v-dialog>
+				 </v-col>
+			</v-row>
+		 </v-card-text>
+	</v-card>
 	<v-table class="pa-3">
 	    <thead>
 	    <tr>
@@ -34,6 +108,15 @@
 </template>
 
 <script setup lang="ts">
+import {ref, computed} from "vue"
+
+const dialog = ref(false);
+const editedIndex = ref(-1);
+const refForm = ref();
+
+const formTitle = computed(() => {
+  return editedIndex.value === -1 ? "添加新的配置" : "编辑新的配置";
+});
 
 const headers = [
   { text: "项目名称", value: "project" },
