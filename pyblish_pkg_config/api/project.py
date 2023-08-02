@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Request
 from typing import Optional
 from ..response import success, fail
-from ..models import Project, BuildVersion
+from ..models import Project, BuildVersion, ProjectSetting
 from ..schemas import project
 
 ProjectApi = APIRouter(prefix="/project", tags=[u"项目模块"])
@@ -22,6 +22,11 @@ async def get_current_build(project_id: int) -> dict:
         return fail(code=302, msg="no find build version", data="")
 
     return success(data=f"static_files/build/{project_data.get('name')}/{project_data.get('use_verison')}.zip")
+
+
+@ProjectApi.get("/config/{project_id}", summary=u"获取项目全部插件配置")
+async def get_all_project_config(project_id: int) -> dict:
+    return success(data=list(await ProjectSetting.filter(project_id=project_id).all()))
 
 
 @ProjectApi.post("/", summary=u"添加项目")

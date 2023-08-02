@@ -67,15 +67,7 @@
 					 <v-card-actions class="pa-4">
 					   <v-spacer></v-spacer>
 					   <v-btn color="error" @click="close">Cancel</v-btn>
-					   <v-btn
-						 color="secondary"
-						 :disabled="
-						   editedItem.name == '' || editedItem.root_path == ''
-						 "
-						 variant="flat"
-						 @click="save"
-						 >Save</v-btn
-					   >
+					   <v-btn color="secondary" :disabled="editedItem.name == '' || editedItem.root_path == ''" variant="flat" @click="save">Save</v-btn>
 					 </v-card-actions>
 				   </v-card>
 				 </v-dialog>
@@ -83,14 +75,16 @@
 		</v-row>
 	</v-card-text>
 </v-card>
+<fileAttrTable></fileAttrTable>
+<pyFileCode v-if="isShowCode"></pyFileCode>
 
-  <fileAttrTable></fileAttrTable>
 </template>
 
 <script setup lang="ts">
 import {ref, computed} from "vue"
 
 import fileAttrTable from "@/components/file/fileAttrTable.vue";
+import pyFileCode from "@/components/file/pyFileCode.vue";
 
 const dialog = ref(false);
 const editedIndex = ref(-1);
@@ -99,6 +93,7 @@ const formTitle = computed(() => {
 });
 
 const refForm = ref();
+const isShowCode = ref(false);
 const editedItem = ref({
   id: "",
   name: "1.jpg",

@@ -49,9 +49,7 @@
 						 </v-btn>
 					   </template>
 					 </v-tooltip>
-					<v-btn @click="edit_code(item.id)" color="blue">
-					 		编辑Code
-					</v-btn>
+					<v-btn @click="edit_code(item.id)" color="blue">编辑Code</v-btn>
 				   </div>
 				 </td>
 			   </tr>
@@ -64,34 +62,22 @@
 <script setup lang="ts">
 import {ref, computed} from "vue"
 
-const dialog = ref(false);
-const editedIndex = ref(-1);
-const refForm = ref();
+interface ItemData {
+  id: number;
+  name: string;
+  label: string;
+  describe: string;
+  to_path: string;
+  tags: string;
+  actions: string;
+  active: string;
+  families: string;
+  hosts: string;
+  optional: string;
+  order: number;
+  targets: string;
+}
 
-const editedItem = ref({
-  id: 0,
-  name: "",
-  label: "",
-  describe: "",
-  to_path: "",
-  tags: "",
-  actions: "",
-  active: "",
-  families: "",
-  hosts: "",
-  optional: "",
-  order: "",
-  targets: ""
-});
-
-const nameRules = [
-  (v) => !!v || "Name is required",
-  (v) => (v && v.length >= 4) || "Name must be greater than 4 characters",
-];
-
-const formTitle = computed(() => {
-  return editedIndex.value === -1 ? "添加新的配置" : "编辑新的配置";
-});
 
 const filteredList = [{
   id: 1,
@@ -105,15 +91,15 @@ const filteredList = [{
   families: "",
   hosts: "",
   optional: "",
-  order: "",
+  order: 0,
   targets: "",
 }]
 
-function close() {
+function editItem(item: ItemData) {
 	
 }
 
-function save() {
+function deleteItem(item: ItemData) {
 	
 }
 

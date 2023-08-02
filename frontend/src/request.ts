@@ -2,7 +2,7 @@ import type {AxiosRequestConfig, AxiosInstance, AxiosResponse} from "axios"
 import axios from "axios"
 import { get } from "lodash"
 
-import SysCfg from "../config"
+import SysCfg from "./config"
 import Tools from "./tools"
 
 export interface IResponse<T = any> {
@@ -26,7 +26,7 @@ axios.defaults.headers.head["Content-Type"] = "application/json;chartset=utf-8"
 
 let timerLoading: ReturnType<typeof setTimeout>;
 const axiosInstance: AxiosInstance = axios.create({
-    baseURL: SysCfg.getConfig<string>("baseUrl"),
+    baseURL: SysCfg.baseUrl,
     timeout: 10000
 })
 
@@ -44,7 +44,7 @@ axiosInstance.interceptors.response.use((res: AxiosResponse) => {
         if (data){
             if (401 == data.code && force401ToLogin){
                 // 跳转到login页面
-                SysCfg.redirectToLogin()
+                SysCfg.redirectToLogin
                 return
             } else if (data.code >= 400 && data.code <= 404 || data.code == 500){
                 return Promise.reject(data)
